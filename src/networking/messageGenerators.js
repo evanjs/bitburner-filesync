@@ -12,7 +12,6 @@ export function fileChangeEventToMsg({ path }) {
     } else {
         destPath = path;
     }
-    console.log(`DestPath: ${destPath}`);
     return {
         "jsonrpc": "2.0",
         "method": "pushFile",
