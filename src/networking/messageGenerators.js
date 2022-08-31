@@ -5,16 +5,20 @@ import { join } from "path";
 let messageCounter = 0;
 
 export function fileChangeEventToMsg({ path }) {
-    const slashes = path.match('/') || [].length;
+    const slashes = path.match('/')?.length ?? 0;
+    let destPath;
     if (slashes > 0) {
-        path = `/${path}`
+        destPath = `/${path}`
+    } else {
+        destPath = path;
     }
+    console.log(`DestPath: ${destPath}`);
     return {
         "jsonrpc": "2.0",
         "method": "pushFile",
         "params": {
             "server": "home",
-            "filename": path,
+            "filename": destPath,
             "content": readFileSync(join(config.get("scriptsFolder"), path)).toString()
         },
         "id": messageCounter++
