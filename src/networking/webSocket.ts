@@ -25,5 +25,15 @@ export function setupSocket(signaller: Signal) {
     signaller.trigger(EventType.ConnectionMade);
   });
 
+  const interval = setInterval(function ping() {
+    for (const ws of wss.clients) {
+      ws.ping();
+    }
+  }, 10000);
+
+  wss.on("close", function close() {
+    clearInterval(interval);
+  });
+
   return wss;
 }
